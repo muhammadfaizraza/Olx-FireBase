@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-
+import { auth, fs } from "../Config/Config.js";
+import { Link, useNavigate } from "react-router-dom";
 const SignUp = () => {
+  const navigate = useNavigate();
+  const [errMessage, seterrMessage] = useState();
+  const [SuccessMsg, setSuccessMsg] = useState();
+
   const [User, setUser] = useState({
     name: "",
     email: "",
@@ -12,27 +17,41 @@ const SignUp = () => {
     name = e.target.name;
     value = e.target.value;
     setUser({ ...User, [name]: value });
-    console.log(User);
   };
-  const Submit = async (e) => {
+  const Submit = (e) => {
     e.preventDefault();
-
-    const { name, email, phone, password } = User;
-    await fetch(
-      "https://olxauth-ec89e-default-rtdb.firebaseio.com/olx.json",
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "aplication/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          password,
-        }),
-      }
-    );
+    // console.log(User);
+    // navigate("./");
+    auth
+      .createUserWithEmailAndPassword(User.email, User.password)
+        .then((userData) => {
+          console.log(userData, "hai");
+          fs.collection("users")
+            .doc(userData.user.uid)
+            .set({
+            Name: User.name,
+            Email: User.email,
+            Phone: User.phone,
+            Password: User.password,
+          })
+          .then(() => {
+            setSuccessMsg("Your Account Has been Created Successfully");
+            setUser({
+              name: "",
+              email: "",
+              phone: "",
+              password: "",
+            });
+            setTimeout(() => {
+              setSuccessMsg("");
+              navigate("/login");
+            }, 3000);
+          })
+          .catch((error) => seterrMessage(error.message));
+      })
+      .catch((error) => {
+        seterrMessage(error.message);
+      });
   };
 
   return (
@@ -40,6 +59,11 @@ const SignUp = () => {
       <header>
         <h3>Sign Up</h3>
       </header>
+      {SuccessMsg && (
+        <>
+          <p>{SuccessMsg}</p>
+        </>
+      )}
       <form method="post">
         <div>
           <input
@@ -82,11 +106,19 @@ const SignUp = () => {
             value={User.password}
           />
         </div>
-        <button type="submit" onClick={Submit}>
+        <Link to="/login"> Already Have an Account</Link>
+        <div>
           {" "}
-          Sign Up{" "}
-        </button>
+          <button type="submit" onClick={Submit}>
+            Sign Up
+          </button>
+        </div>
       </form>
+      {errMessage && (
+        <>
+          <p>{errMessage}</p>
+        </>
+      )}
     </div>
   );
 };

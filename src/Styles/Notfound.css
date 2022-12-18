@@ -1,0 +1,43 @@
+.notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.notFound p {
+  font-size: 40px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transform: 1.1;
+  animation-name: example;
+  animation-duration: 10s;
+  animation-delay: 1s;
+  position: relative;
+}
+
+@keyframes example {
+  0% {
+    color: red;
+    left: 0px;
+    top: 0px;
+  }
+  25% {
+    color: yellow;
+    left: 100px;
+    top: 0px;
+  }
+  50% {
+    color: blue;
+    left: 100px;
+    top: 200px;
+  }
+  75% {
+    color: green;
+    left: 0px;
+    top: 200px;
+  }
+  100% {
+    color: red;
+    left: 0px;
+    top: 0px;
+  }
+}
