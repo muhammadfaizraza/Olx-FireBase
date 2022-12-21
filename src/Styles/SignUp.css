@@ -1,0 +1,26 @@
+.signUp {
+  width: 50%;
+}
+.signupheader h3 {
+  margin: 0 43px;
+}
+.signupheader {
+  height: 277px;
+}
+.signupLogo {
+  margin: 0 auto;
+  margin-top: 100px;
+}
+.signupLogo img {
+  height: 6rem;
+  width: 8rem;
+}
+.form {
+position: absolute;
+left: 38%;
+
+}
+.form input{
+    width: 100%;
+    margin: 10px 20px;
+    }

@@ -18,17 +18,17 @@ const Login = () => {
   };
   const Submit = (e) => {
     e.preventDefault();
- auth.signInWithEmailAndPassword(User.email,User.password).then(() => {
-  setSuccessMsg("Your Account Has been Created Successfully");
-  setUser({
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-  });
-navigate('/')
-  });
-  }
+    auth.signInWithEmailAndPassword(User.email, User.password).then(() => {
+      setSuccessMsg("Your Account Has been Created Successfully");
+      setUser({
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
+      });
+      navigate("/");
+    });
+  };
   return (
     <Fragment>
       <header>
@@ -61,16 +61,17 @@ navigate('/')
           />
         </div>
         {errMessage && (
-        <>
-          <p>{errMessage}</p>
-        </>
-      )}
-<div>        <button type="submit" onClick={Submit}>
-          {" "}
-          Login
-        </button>
+          <>
+            <p>{errMessage}</p>
+          </>
+        )}
+        <div>
+          
+          <button type="submit" onClick={Submit}>
+            
+            Login
+          </button>
         </div>
-
       </form>
     </Fragment>
   );

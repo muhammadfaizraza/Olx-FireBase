@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { auth, fs } from "../Config/Config.js";
 import { Link, useNavigate } from "react-router-dom";
+import '../Styles/SignUp.css'
+import Logo from "../assets/Olx logo.png"
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [errMessage, seterrMessage] = useState();
@@ -54,17 +57,22 @@ const SignUp = () => {
       });
   };
 
+
   return (
-    <div className="container">
-      <header>
+    <div className="container signUp">
+      <header className="signupheader">
+      <div className="signupLogo">
+        <img src={Logo} alt=""/>
+       
         <h3>Sign Up</h3>
+        </div>
       </header>
       {SuccessMsg && (
         <>
           <p>{SuccessMsg}</p>
         </>
       )}
-      <form method="post">
+      <form method="post" className="form">
         <div>
           <input
             placeholder="Name"
@@ -106,13 +114,15 @@ const SignUp = () => {
             value={User.password}
           />
         </div>
-        <Link to="/login"> Already Have an Account</Link>
-        <div>
+      
           {" "}
+          <div>
+          <Link to="/login"> Already Have an Account</Link>
+          </div>
           <button type="submit" onClick={Submit}>
             Sign Up
           </button>
-        </div>
+   
       </form>
       {errMessage && (
         <>
