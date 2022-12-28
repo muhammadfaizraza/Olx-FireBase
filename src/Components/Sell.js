@@ -3,11 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import "../Styles/SignUp.css";
 import Logo from "../assets/Olx logo.png";
 import { storage, fs } from "../Config/Config";
-
+import Error from "../assets/error.webp";
+import swal from "sweetalert";
 const Sell = () => {
   const navigate = useNavigate();
-  const [errMessage, seterrMessage] = useState();
-  const [SuccessMsg, setSuccessMsg] = useState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -46,25 +45,35 @@ const Sell = () => {
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
-            fs.collection("products").add({
+            fs.collection("products")
+              .add({
                 title,
                 description,
                 price: Number(price),
                 url,
               })
               .then(() => {
-                setSuccessMsg("product add successfully");
+                swal({
+                  icon: "success",
+                  text: "data has been added",
+                  title: "Success",
+                });
                 setTitle("");
                 setDescription("");
                 setPrice("");
                 document.getElementById("file").value = "";
-                seterrMessage("");
-                setTimeout(() => {
-                  setSuccessMsg("");
-                }, 3000);
+
+                setTimeout(() => {}, 3000);
               })
-              .catch((error) => seterrMessage(error.message));
-            });
+              .catch((error) =>
+                swal({
+                  icon: Error,
+                  text: error.message,
+                  title: "Error!",
+                  type: "error",
+                })
+              );
+          });
       }
     );
   };
@@ -74,14 +83,9 @@ const Sell = () => {
       <header className="signupheader">
         <div className="signupLogo">
           <img src={Logo} alt="" />
-          <h3>Sign Up</h3>
+          
         </div>
       </header>
-      {SuccessMsg && (
-        <>
-          <p>{SuccessMsg}</p>
-        </>
-      )}
       <form method="post" className="form">
         <div>
           <input
@@ -123,15 +127,11 @@ const Sell = () => {
           />
         </div>
 
-        <button type="submit" onClick={SubmitProduct}>
-          Send
+        <div className="btnDiv">
+        <button type="submit" className="submitBtn" onClick={SubmitProduct}>
+       Send
         </button>
-      </form>
-      {errMessage && (
-        <>
-          <p>{errMessage}</p>
-        </>
-      )}
+        </div>      </form>
     </div>
   );
 };

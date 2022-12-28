@@ -1,11 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { auth, fs } from "../Config/Config.js";
 import { Link, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [errMessage, seterrMessage] = useState();
-  const [SuccessMsg, setSuccessMsg] = useState();
   const [User, setUser] = useState({
     email: "",
     password: "",
@@ -19,7 +18,11 @@ const Login = () => {
   const Submit = (e) => {
     e.preventDefault();
     auth.signInWithEmailAndPassword(User.email, User.password).then(() => {
-      setSuccessMsg("Your Account Has been Created Successfully");
+      swal({
+        title: "Good job!",
+        text: "You are log in successfully",
+        icon: "success",
+      });
       setUser({
         name: "",
         email: "",
@@ -31,14 +34,10 @@ const Login = () => {
   };
   return (
     <Fragment>
+      <div className="login">
       <header>
         <h3>Login</h3>
       </header>
-      {SuccessMsg && (
-        <>
-          <p>{SuccessMsg}</p>
-        </>
-      )}
 
       <form method="post">
         <div>
@@ -60,19 +59,14 @@ const Login = () => {
             onChange={handleChange}
           />
         </div>
-        {errMessage && (
-          <>
-            <p>{errMessage}</p>
-          </>
-        )}
-        <div>
-          
-          <button type="submit" onClick={Submit}>
-            
+
+        <div className="btnDiv2">
+          <button className="submitBtn" type="submit" onClick={Submit}>
             Login
           </button>
         </div>
       </form>
+      </div>
     </Fragment>
   );
 };

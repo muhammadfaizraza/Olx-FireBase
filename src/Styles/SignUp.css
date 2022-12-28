@@ -2,18 +2,20 @@
   width: 50%;
 }
 .signupheader h3 {
-  margin: 0 43px;
+  margin: 0 23px;
 }
 .signupheader {
   height: 277px;
+  width: 960px;
+;
 }
 .signupLogo {
   margin: 0 auto;
   margin-top: 100px;
 }
 .signupLogo img {
-  height: 6rem;
-  width: 8rem;
+  height: 4rem;
+  width: 6rem;
 }
 .form {
 position: absolute;
@@ -24,3 +26,51 @@ left: 38%;
     width: 100%;
     margin: 10px 20px;
     }
+    .productSection{
+
+display: flex;
+width: 100vw;
+flex-direction: row;
+flex-wrap: wrap;    
+margin: 50px 20px;
+}
+.productCard{
+  margin: 0 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;}
+
+  .swal-icon img {
+    width: 20% !important;
+    
+}
+.login {
+  width: 25%;
+  margin: 100px auto;
+}
+.login h3{
+  margin: 43px;
+
+}
+.login input {
+  margin: 10px 20px;
+  width: 300px;
+}
+header p {
+  margin: 20px;
+}
+.submitBtn {
+  border-radius: 20px;
+
+  margin: 20px 18px;
+  background: blue;
+  color: white;
+  border: none;
+  height: 37px;
+  font-family: sans-serif;
+width: 200px !important;
+}
+.btnDiv{
+  margin-left: 30px;
+}
+.btnDiv2 button{
+width: 290px !important; 
+}

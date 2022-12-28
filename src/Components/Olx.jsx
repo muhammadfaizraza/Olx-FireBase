@@ -8,8 +8,10 @@ import { AiOutlineSearch } from "react-icons/ai";
 import Border from "../assets/Border.svg";
 import { Link } from "react-router-dom";
 import { fs } from "../Config/Config";
+import Product from "./Product";
 
 const Olx = () => {
+  const [state , setState] = useState(false)
   const [product, setProduct] = useState([]);
 
   const getProdcts = async () => {
@@ -23,8 +25,7 @@ const Olx = () => {
       });
       if (productsArray.length === Products.docs.length) {
         setProduct(productsArray);
-        console.log(product)
-    
+        console.log(product);
       }
     }
   };
@@ -44,7 +45,15 @@ const Olx = () => {
           <BsBuilding />
           Property
         </span>
+        <span>
+      
+        <Link to="/sell">
+          <p>Sell</p>
+        
+        </Link>
+      </span>
       </header>
+  
       <div className="sub-header">
         <img src={olx} alt="" />
         <Dropdown>
@@ -58,23 +67,27 @@ const Olx = () => {
             <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
+
+
         <input placeholder="Find Cars,Mobile Phones and More..." />
         <AiOutlineSearch className="search-icon" />
+ 
         <Link to="/login">
           <h6>Login</h6>
         </Link>
-        <span>
-          <img src={Border} alt="" />
-          <Link to="/signup">
-            {" "}
-            <h5>Sign Up</h5>
-          </Link>
-        </span>
-      </div>
+
+      <span onClick={() => setState(true)}>
+        <img src={Border} alt="" />
+        <Link to="/signup" >
+          {" "}
+          <h5>Sign Up</h5>
+        </Link>
+      </span>
+  
+ 
+  </div>
       <div>
-        <div>
-<h3>          {product.h3}</h3>
-        </div>
+        <Product data={product} />
       </div>
     </Fragment>
   );

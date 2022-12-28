@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { auth, fs } from "../Config/Config.js";
 import { Link, useNavigate } from "react-router-dom";
-import '../Styles/SignUp.css'
-import Logo from "../assets/Olx logo.png"
+import "../Styles/SignUp.css";
+import Logo from "../assets/Olx logo.png";
+import swal from "sweetalert";
+import Error from "../assets/error.webp";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -27,18 +29,21 @@ const SignUp = () => {
     // navigate("./");
     auth
       .createUserWithEmailAndPassword(User.email, User.password)
-        .then((userData) => {
-          console.log(userData, "hai");
-          fs.collection("users")
-            .doc(userData.user.uid)
-            .set({
+      .then((userData) => {
+        fs.collection("users")
+          .doc(userData.user.uid)
+          .set({
             Name: User.name,
             Email: User.email,
             Phone: User.phone,
             Password: User.password,
           })
           .then(() => {
-            setSuccessMsg("Your Account Has been Created Successfully");
+            swal({
+              title: "Good job!",
+              text: "Your account is created successfully",
+              icon: "success",
+            });
             setUser({
               name: "",
               email: "",
@@ -50,29 +55,35 @@ const SignUp = () => {
               navigate("/login");
             }, 3000);
           })
-          .catch((error) => seterrMessage(error.message));
+          .catch((error) =>
+            swal({
+              icon: Error,
+              text: error.message,
+              title: "Error!",
+              type: "error",
+            })
+          );
       })
       .catch((error) => {
-        seterrMessage(error.message);
+        swal({
+          icon: Error,
+          text: error.message,
+          title: "Error!",
+          type: "error",
+        });
       });
   };
-
 
   return (
     <div className="container signUp">
       <header className="signupheader">
-      <div className="signupLogo">
-        <img src={Logo} alt=""/>
-       
-        <h3>Sign Up</h3>
+        <div className="signupLogo">
+          <img src={Logo} alt="" />
+
+          <h3>Sign Up</h3>
         </div>
       </header>
-      {SuccessMsg && (
-        <>
-          <p>{SuccessMsg}</p>
-        </>
-      )}
-      <form method="post" className="form">
+<div className="form">      <form method="post" className="form">
         <div>
           <input
             placeholder="Name"
@@ -103,7 +114,6 @@ const SignUp = () => {
             value={User.phone}
           />
         </div>
-
         <div>
           <input
             placeholder="password"
@@ -113,23 +123,19 @@ const SignUp = () => {
             onChange={handleChange}
             value={User.password}
           />
-        </div>
-      
-          {" "}
-          <div>
+        </div>{" "}
+        <div>
           <Link to="/login"> Already Have an Account</Link>
-          </div>
-          <button type="submit" onClick={Submit}>
-            Sign Up
-          </button>
-   
+        </div>
+        <div className="btnDiv">
+        <button type="submit" className="submitBtn" onClick={Submit}>
+          Sign Up
+        </button>
+        </div>
       </form>
-      {errMessage && (
-        <>
-          <p>{errMessage}</p>
-        </>
-      )}
     </div>
+    </div>
+
   );
 };
 
